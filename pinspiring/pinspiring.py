@@ -2,11 +2,13 @@
 
 from signal import pause
 
+import MQTTMessages as Messages
 import apa
-import mqtt_messages
-import temperature as mqtt_handler
-from clockring import ClockRing
 import led_config
+import mqtt_config as config
+from clockring import ClockRing
+from temperature import Temperature
+
 
 def main():
     # Setup the Rasp.IO LED Strings
@@ -14,15 +16,18 @@ def main():
     ledstrip.zero_leds()
     ledstrip.write_leds()
 
-    handlerclass = mqtt_handler.Temperature(ledstrip)
-    mqtt_messages.Messages(handlerclass)
+    clock = ClockRing(ledstrip)
+    clock.start()
 
-    ClockRing(ledstrip)
+    # Set up the handler class
+    handlerclass = Temperature(ledstrip)
+    # Start MQTT Listener
+    Messages.MQTTMessages(config.mqttconfig, handlerclass)
+
+    handlerclass.start()
 
     pause()
 
 
 if __name__ == "__main__":
     main()
-
-print("Shouldn't get here!")

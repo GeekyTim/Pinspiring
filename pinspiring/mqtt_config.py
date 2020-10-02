@@ -5,14 +5,12 @@ mqttconfig = {"broker": {"host": "WDDrivePi.localdomain",
                          "keepalive": 60,
                          "transport": "tcp",
                          "tlsversion": 2,
-                         "certfile": "/home/pi/mqtt-ca.crt"},
-              "local": {"deviceid": "Pinspiring",
+                         "certfile": "/home/pi/mqtt-serv.crt"},
+              "thisclient": {"devicetypes": ["Pinspiring"],
                         "username": "Pinspiring",
                         "password": "Pinspiring",
-                        "device": "Pinspiring",
-                        "version": 1},
-              "queues": {"Pinspiring": {"name": "weather/temperature",
-                                         "qos": 2}
-
-                         }
+                        "deviceid": "Pinspiring",
+                        "version": 1.1},
+              "subscribeto": [{"name": "pinspiring", "definition": {"topic": "weather/temperature", "qos": 2}}],
+              "publishto": []
               }

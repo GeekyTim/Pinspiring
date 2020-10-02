@@ -14,10 +14,9 @@ temperaturecolours = [(0, 0, 255),
                       (0, 255, 0),
                       (255, 192, 0),
                       (255, 0, 0)]
-tempqueueparam = "temp_in_c"
 
 numleds = clockstrip + tempstrip
-brightness = 2  # 0-31, 224-255 or 0xE0-0xFF
+brightness = 228
 
 
 def convertled(led):

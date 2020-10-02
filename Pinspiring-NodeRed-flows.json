@@ -1,0 +1,170 @@
+[
+    {
+        "id": "3bde6af3.c702f6",
+        "type": "tab",
+        "label": "Pinspiring",
+        "disabled": false,
+        "info": "For displaying the temperature in the cerntre bar."
+    },
+    {
+        "id": "a9b8fe8d.9b342",
+        "type": "mqtt in",
+        "z": "3bde6af3.c702f6",
+        "name": "Weather Station",
+        "topic": "weather/now",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "de6feac7.e319f8",
+        "x": 271.5,
+        "y": 257,
+        "wires": [
+            [
+                "686a5b2e.05d594",
+                "f24ffdf3.c907c"
+            ]
+        ]
+    },
+    {
+        "id": "9c428aa4.0ac2c8",
+        "type": "mqtt out",
+        "z": "3bde6af3.c702f6",
+        "name": "Inside Temperature",
+        "topic": "weather/temperature",
+        "qos": "2",
+        "retain": "false",
+        "broker": "de6feac7.e319f8",
+        "x": 979.5,
+        "y": 259,
+        "wires": []
+    },
+    {
+        "id": "686a5b2e.05d594",
+        "type": "debug",
+        "z": "3bde6af3.c702f6",
+        "name": "Input",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 446.5,
+        "y": 344,
+        "wires": []
+    },
+    {
+        "id": "42982a72.42ed24",
+        "type": "debug",
+        "z": "3bde6af3.c702f6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 966.5,
+        "y": 328,
+        "wires": []
+    },
+    {
+        "id": "da7dce65.fa588",
+        "type": "template",
+        "z": "3bde6af3.c702f6",
+        "name": "MQTT Message Format",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"mqttmessage\":{\"device\":\"Pinspiring\",\"version\": 1,\"payload\": {\"command\": \"temperature\",\"params\":{\"temp_in_c\":{{payload}}}}}}",
+        "output": "json",
+        "x": 711.5,
+        "y": 258,
+        "wires": [
+            [
+                "9c428aa4.0ac2c8",
+                "42982a72.42ed24"
+            ]
+        ]
+    },
+    {
+        "id": "f24ffdf3.c907c",
+        "type": "change",
+        "z": "3bde6af3.c702f6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temp_in_c",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 473.5,
+        "y": 257,
+        "wires": [
+            [
+                "da7dce65.fa588",
+                "ba7b4cf5.82cfc"
+            ]
+        ]
+    },
+    {
+        "id": "ba7b4cf5.82cfc",
+        "type": "debug",
+        "z": "3bde6af3.c702f6",
+        "name": "Extract Temp",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 684.5,
+        "y": 330,
+        "wires": []
+    },
+    {
+        "id": "de6feac7.e319f8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "WDDrivePi",
+        "broker": "WDDrivePi.localdomain",
+        "port": "8883",
+        "tls": "72cfbe2d.9ea47",
+        "clientid": "WDDrivePi",
+        "usetls": true,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "72cfbe2d.9ea47",
+        "type": "tls-config",
+        "z": "",
+        "name": "Cert",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "mqtt-serv.crt",
+        "keyname": "mqtt-serv.key",
+        "caname": "mqtt-ca.crt",
+        "servername": "",
+        "verifyservercert": true
+    }
+]

@@ -6,7 +6,7 @@ After=multi-user.target
 Type=idle
 
 User=pi
-ExecStart=/usr/bin/python3 /home/pi/pinspiring/pinspiring.py
+ExecStart=/usr/bin/python3 /home/pi/Pinspiring/code/pinspiring.py
 
 Restart=always
 RestartSec=0
